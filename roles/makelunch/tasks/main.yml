@@ -6,12 +6,7 @@
   sudo: yes
   user: name={{user}} group={{user}}
 
-- name: Remove build dir
-  sudo: yes
-  sudo_user: "{{user}}"
-  command: rm -rf /home/{{user}}/{{service}}/build
-
-- name: Clone Medialist
+- name: Clone app repo
   sudo: yes
   sudo_user: "{{user}}"
   git: repo=https://github.com/{{repo}}.git dest=/home/{{user}}/{{service}}/src accept_hostkey=yes update=yes
@@ -21,9 +16,14 @@
 - name: Copy settings.json
   sudo: yes
   sudo_user: "{{user}}"
-  copy: src=settings.json dest=/home/{{user}}/{{service}}/settings.json force=
+  copy: src=settings.json dest=/home/{{user}}/{{service}}/settings.json force=yes
   notify:
     - Restart {{service}}
+
+- name: Remove build dir
+  sudo: yes
+  sudo_user: "{{user}}"
+  command: rm -rf /home/{{user}}/{{service}}/build
 
 - name: Demeteorize app
   sudo: yes
