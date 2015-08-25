@@ -1,0 +1,17 @@
+- name: Add nodesource apt repository key
+  sudo: yes
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+
+- name: Add nodesource nodejs0.10 apt repository
+  sudo: yes
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_0.10 trusty main"
+
+- name: Remove default nodejs repository
+  sudo: yes
+  apt_repository: repo='ppa:chris-lea/node.js' state=absent
+
+- name: Install Node
+  sudo: yes
+  apt: name=nodejs state=present

@@ -1,0 +1,2 @@
+[dev]
+lunch.tableflip.local ansible_ssh_user=ansible

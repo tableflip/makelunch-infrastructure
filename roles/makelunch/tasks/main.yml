@@ -1,0 +1,56 @@
+- name: Ensure system groups exists
+  sudo: yes
+  group: name={{user}} state=present
+
+- name: Ensure system user exists
+  sudo: yes
+  user: name={{user}} group={{user}}
+
+- name: Remove build dir
+  sudo: yes
+  sudo_user: "{{user}}"
+  command: rm -rf /home/{{user}}/{{service}}/build
+
+- name: Clone Medialist
+  sudo: yes
+  sudo_user: "{{user}}"
+  git: repo=https://github.com/{{repo}}.git dest=/home/{{user}}/{{service}}/src accept_hostkey=yes update=yes
+  notify:
+    - Restart {{service}}
+
+- name: Copy settings.json
+  sudo: yes
+  sudo_user: "{{user}}"
+  copy: src=settings.json dest=/home/{{user}}/{{service}}/settings.json force=
+  notify:
+    - Restart {{service}}
+
+- name: Demeteorize app
+  sudo: yes
+  sudo_user: "{{user}}"
+  command: demeteorizer -o /home/{{user}}/{{service}}/build  --json "$(cat ../settings.json)"
+  args:
+    chdir: /home/{{user}}/{{service}}/src
+
+- name: Install Meteor NPM dependencies
+  sudo: yes
+  sudo_user: "{{user}}"
+  shell: npm install
+  args:
+    chdir: /home/{{user}}/{{service}}/build
+
+- name: Copy Upstart config
+  sudo: yes
+  template: src=upstart/upstart.conf dest=/etc/init/{{service}}.conf mode=0644 force=yes
+  notify:
+    - Restart {{service}}
+
+- name: Ensure the app is running
+  sudo: yes
+  service: name={{service}} state=started
+
+- name: Copy Nginx config
+  sudo: yes
+  copy: src=nginx/nginx.conf dest=/etc/nginx/conf.d/{{service}}.conf mode=0644 force=yes
+  notify:
+    - Restart Nginx

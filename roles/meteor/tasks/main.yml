@@ -1,0 +1,9 @@
+- name: Install Meteor
+  sudo: yes
+  shell: curl https://install.meteor.com/ | sh
+  args:
+    creates: /usr/local/bin/meteor
+
+- name: Install Demeteorizer
+  sudo: yes
+  npm: name=demeteorizer global=yes
