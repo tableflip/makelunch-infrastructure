@@ -77,11 +77,15 @@ You will need some secrets... Talk to your friendly neighborhood tableflipper.
 # Download and provision a vm
 vagrant up
 
-# Update vm with KitTorrent services
+# bootstrap.yml is run automagically by vagrant.
+
+# Install and configure all the things!
 ansible-playbook -i dev playbook.yml
 ```
 
 You now have a test vm, running locally
+
+---
 
 **To bootstrap a new production vm**
 
@@ -95,3 +99,7 @@ ansible-playbook -i production bootstrap.yml --extra-vars "ansible_ssh_user=root
 # Intall app and dependencies
 ansible-playbook -i production playbook.yml
 ```
+
+---
+
+A (╯°□°）╯︵[TABLEFLIP](https://tableflip.io/) project.
