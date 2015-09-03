@@ -1,2 +1,2 @@
 [production]
-lunch.tableflip.io ansible_ssh_user=ansible
+lunch.tableflip.io ansible_ssh_user=ansible env=prod
