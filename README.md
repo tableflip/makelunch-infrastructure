@@ -71,7 +71,7 @@ You will need some secrets... Talk to your friendly neighborhood tableflipper.
 
 - Install Ansible
 - Install Vagrant (`brew install vagrant`)
-- Add `10.100.108.100	makelunch.tableflip.local` to your local `/etc/hosts`
+- Add `10.100.108.100	lunch.tableflip.local` to your local `/etc/hosts`
 
 ```sh
 # Download and provision a vm
