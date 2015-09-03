@@ -16,7 +16,7 @@
 - name: Copy settings.json
   sudo: yes
   sudo_user: "{{user}}"
-  copy: src=settings.json dest=/home/{{user}}/{{service}}/settings.json force=yes
+  copy: src=settings-{{env}}.json dest=/home/{{user}}/{{service}}/settings.json force=yes
   notify:
     - Restart {{service}}
 

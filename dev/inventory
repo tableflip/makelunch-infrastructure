@@ -1,2 +1,2 @@
 [dev]
-lunch.tableflip.local ansible_ssh_user=ansible
+lunch.tableflip.local ansible_ssh_user=ansible env=dev

@@ -10,7 +10,7 @@
     - makelunch
   vars:
     node_env: production
-    root_url: http://lunch.tableflip.dev
+    root_url: http://lunch.tableflip.local
 
 - hosts: production
   roles:
