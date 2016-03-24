@@ -1,3 +1,4 @@
 .vagrant
-production.json
-*id_rsa
+id_rsa
+secrets.yml
+*.retry

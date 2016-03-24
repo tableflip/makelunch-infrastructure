@@ -1,21 +1,4 @@
 - hosts: all
   roles:
-    - common
-
-- hosts: dev
-  roles:
-    - node
-    - mongodb
-    - meteor
-    - makelunch
-  vars:
-    node_env: production
-    root_url: http://lunch.tableflip.dev
-
-- hosts: production
-  roles:
-    - meteor
-    - makelunch
-  vars:
-    node_env: production
-    root_url: http://lunch.tableflip.io
+    - apt-update
+    - lunch

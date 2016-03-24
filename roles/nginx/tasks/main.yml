@@ -1,0 +1,9 @@
+- name: Install Nginx
+  become: yes
+  apt: name=nginx state=present
+
+- name: Copy core Nginx configs
+  become: yes
+  copy: src=conf/ dest=/etc/nginx/ mode=0644 force=yes
+  notify:
+    - Restart Nginx

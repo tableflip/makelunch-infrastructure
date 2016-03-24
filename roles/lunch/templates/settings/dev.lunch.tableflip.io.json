@@ -1,0 +1,28 @@
+{
+  "MESSAGEBIRD_KEY": "{{sites[inventory_hostname].messagebird.key}}",
+  "GCM": {
+    "authorization": "{{sites[inventory_hostname].gcm.authorization}}"
+  },
+  "messagePassword": "{{sites[inventory_hostname].messagePassword}}",
+  "public": {
+    "GCM": {
+      "senderId": "877227024178"
+    },
+    "uploadcare": {
+      "publicKey": "d2f218ed8b7e85873f44"
+    }
+  },
+  "twitter": {
+    "consumerKey": "{{sites[inventory_hostname].twitter.consumerKey}}",
+    "secret": "{{sites[inventory_hostname].twitter.secret}}"
+  },
+  "twitterWhitelist": [
+    "richsilvo",
+    "_bmordan",
+    "olizilla",
+    "_alanshaw"
+  ],
+  "uploadcare": {
+    "privateKey": "{{sites[inventory_hostname].uploadcare.privateKey}}"
+  }
+}
