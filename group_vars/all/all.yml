@@ -1,2 +1,3 @@
 ansible_user: ansible
+ssl_cert: tableflip.io
 node_env: production
