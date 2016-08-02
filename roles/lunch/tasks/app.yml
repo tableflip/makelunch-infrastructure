@@ -1,0 +1,61 @@
+# install {{service}}/{{service}} e.g /home/kudoshealth-api/kudoshealth-api
+
+- name: Ensure system groups exists
+  become: yes
+  group: name={{service}} state=present
+
+- name: Ensure system user exists
+  become: yes
+  user: name={{service}} group={{service}}
+
+- name: Clone repo
+  become: yes
+  become_user: "{{service}}"
+  git: update=yes version=HEAD repo=https://@github.com/{{repo}}.git dest=/home/{{user}}/{{service}}/src
+  notify:
+    - Restart {{service}}
+
+- name: Remove mobile platforms
+  become: yes
+  become_user: "{{user}}"
+  shell: meteor remove-platform ios && meteor remove-platform android
+  args:
+    chdir: /home/{{user}}/{{service}}/src
+
+- name: Build bundle
+  become: yes
+  become_user: "{{user}}"
+  command: meteor build .. --directory
+  args:
+    chdir: /home/{{user}}/{{service}}/src
+  notify:
+    - Restart {{service}}
+
+- name: Undo remove platforms
+  become: yes
+  become_user: "{{user}}"
+  shell: git checkout -- .meteor/platforms
+  args:
+    chdir: /home/{{user}}/{{service}}/src
+
+- name: Install npm dependencies
+  become: yes
+  become_user: "{{user}}"
+  shell: npm install
+  args:
+    chdir: /home/{{user}}/{{service}}/bundle/programs/server
+  notify:
+    - Restart {{service}}
+
+- name: Copy settings
+  become: yes
+  become_user: "{{user}}"
+  template: src=settings/{{inventory_hostname}}.json dest=/home/{{user}}/{{service}}/settings.json force=yes
+
+- name: Copy Upstart config
+  become: yes
+  template: src=upstart/upstart.conf dest=/etc/init/{{service}}.conf mode=0644 force=yes
+
+- name: Ensure app is running
+  become: yes
+  service: name={{service}} state=started enabled=yes

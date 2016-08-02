@@ -1,0 +1,5 @@
+# production
+node_app_instance: 1
+scheme: https
+urls:
+  app: lunch.tableflip.io

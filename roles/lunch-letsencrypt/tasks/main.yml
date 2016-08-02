@@ -1,0 +1,23 @@
+# Assumes `frontend` has been run. Requires a non-ssl configured nginx to be running for the domain.
+- name: Ensure nginx is running
+  become: yes
+  service: name=nginx state=reloaded
+
+- name: Create https cert
+  become: yes
+  command: /usr/bin/certbot-auto certonly --webroot -w /var/www/well-known --domain {{inventory_hostname}} --agree-tos --keep-until-expiring --email {{tls_cert_email}} --quiet
+  args:
+    creates: /etc/letsencrypt/live/{{inventory_hostname}}/cert.pem
+  notify:
+    - Restart Nginx
+
+- name: Set cron to renew certs
+  become: yes
+  cron: name="certbot renew" minute="27" hour="7" job="/user/bin/certbot-auto renew"
+
+# Replace nginx config with SSL flavour
+- name: Copy nginx config
+  become: yes
+  template: src=nginx/nginx.conf dest=/etc/nginx/conf.d/{{service}}.conf mode=0644 force=yes
+  notify:
+    - Restart Nginx
