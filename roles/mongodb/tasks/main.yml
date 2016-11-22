@@ -23,6 +23,12 @@
   notify:
     - Restart MongoDB
 
+- name: Copy MongoDB logrotate.d config
+  become: yes
+  template: src=logrotate.d/mongodb dest=/etc/logrotate.d/mongodb mode=0644 force=yes
+  notify:
+    - Restart MongoDB
+
 - name: Ensure MongoDB is running
   become: yes
   service: name=mongod state=started enabled=yes
