@@ -1,0 +1,5 @@
+# dev
+node_app_instance: dev
+scheme: http
+urls:
+  app: dev.lunch.tableflip.io

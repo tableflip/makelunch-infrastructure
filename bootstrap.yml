@@ -3,6 +3,7 @@
     - apt-update
     - bootstrap
     - github
+    - letsencrypt
     - user
     - mongodb
     - nginx

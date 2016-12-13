@@ -7,15 +7,3 @@
   copy: src=conf/ dest=/etc/nginx/ mode=0644 force=yes
   notify:
     - Restart Nginx
-
-- name: Copy SSL cert
-  become: yes
-  copy: src=ssl/{{ssl_cert}}.crt dest=/etc/ssl/certs/{{ssl_cert}}.crt mode=0644 force=yes
-  notify:
-    - Restart Nginx
-
-- name: Copy SSL key
-  become: yes
-  copy: content="{{keys.ssl}}" dest=/etc/ssl/private/{{ssl_cert}}.key mode=0640 force=yes
-  notify:
-    - Restart Nginx

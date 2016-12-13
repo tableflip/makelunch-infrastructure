@@ -1,0 +1,13 @@
+- name: Install Nginx
+  become: yes
+  apt: name=nginx state=present
+
+- name: Copy Nginx config
+  become: yes
+  template: src=nginx/{{service}}.conf dest=/etc/nginx/conf.d/{{service}}.conf mode=0644 force=yes
+  notify:
+    - Restart Nginx
+
+- name: Ensure Nginx is running
+  become: yes
+  service: name=nginx state=started enabled=yes
